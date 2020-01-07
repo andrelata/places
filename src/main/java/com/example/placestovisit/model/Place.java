@@ -1,0 +1,31 @@
+package com.example.placestovisit.model;
+
+import org.bson.types.Binary;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "places")
+public class Place {
+
+    @Id
+    private String id;
+    private String description;
+    private Binary image;
+
+    public Place(final String description, final Binary image) {
+        this.description = description;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Binary getImage() {
+        return image;
+    }
+
+}
