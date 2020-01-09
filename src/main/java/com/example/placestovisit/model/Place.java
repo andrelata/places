@@ -14,6 +14,7 @@ public class Place {
 
     public Place(final String description, final Binary image) {
         this.description = description;
+        this.image = image;
     }
 
     public String getId() {
