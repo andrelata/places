@@ -4,6 +4,9 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Entity Place
+ */
 @Document(collection = "places")
 public class Place {
 

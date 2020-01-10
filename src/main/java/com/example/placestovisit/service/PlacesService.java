@@ -8,7 +8,21 @@ import java.util.List;
 
 public interface PlacesService {
 
+    /**
+     * @param placeDTO
+     * @return Place
+     * @throws IOException
+     */
     Place create(final PlaceDTO placeDTO) throws IOException;
 
+    /**
+     * @return List of PlaceDTO
+     */
     List<PlaceDTO> getAll();
+
+    /**
+     * @param id Place id
+     * @throws IllegalArgumentException if the place does not exist
+     */
+    void remove(final String id);
 }

@@ -2,6 +2,9 @@ package com.example.placestovisit.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Place DTO
+ */
 public class PlaceDTO {
 
     private String id;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,13 @@ public class PlacesServiceImpl implements PlacesService {
         return places.stream()
                 .map(PlaceMapper::toPlaceDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void remove(final String id) {
+        final Place place = placeMongoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid place Id:" + id));
+        placeMongoRepository.delete(place);
     }
 
 }

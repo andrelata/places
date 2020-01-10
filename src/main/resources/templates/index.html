@@ -47,12 +47,14 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Description</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="place : ${places}">
                                     <td class="w-25"><img alt="sample" th:src="*{'data:image/png;base64,'+ place.image}" class="img-fluid img-thumbnail"/> </td>
-                                    <td th:text="${place.description}"></td>
+                                    <td class="w-75" th:text="${place.description}"></td>
+                                    <td ><a th:href="@{/delete/{id}(id=${place.id})}"><i class="fas fa-trash"></i></a></td>
                                 </tr>
                                 </tbody>
                             </table>
