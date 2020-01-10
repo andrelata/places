@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <head>
@@ -49,9 +50,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Img</td>
-                                    <td>Barcelona</td>
+                                <tr th:each="place : ${places}">
+                                    <td class="w-25"><img alt="sample" th:src="*{'data:image/png;base64,'+ place.image}" class="img-fluid img-thumbnail"/> </td>
+                                    <td th:text="${place.description}"></td>
                                 </tr>
                                 </tbody>
                             </table>
