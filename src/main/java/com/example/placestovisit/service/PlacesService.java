@@ -1,6 +1,5 @@
 package com.example.placestovisit.service;
 
-import com.example.placestovisit.model.Place;
 import com.example.placestovisit.model.PlaceDTO;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ public interface PlacesService {
      * @return Place
      * @throws IOException
      */
-    Place create(final PlaceDTO placeDTO) throws IOException;
+    void create(final PlaceDTO placeDTO) throws IOException;
 
     /**
      * @return List of PlaceDTO
@@ -25,4 +24,18 @@ public interface PlacesService {
      * @throws IllegalArgumentException if the place does not exist
      */
     void remove(final String id);
+
+    /**
+     * @param id Place id
+     * @return Place
+     * @throws IllegalArgumentException if the place does not exist
+     */
+    PlaceDTO getById(final String id);
+
+    /**
+     * @param id Place id
+     * @param placeDTO
+     * @throws IOException
+     */
+    void update(final String id, final PlaceDTO placeDTO) throws IOException;
 }

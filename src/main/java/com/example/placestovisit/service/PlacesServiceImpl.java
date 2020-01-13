@@ -18,8 +18,8 @@ public class PlacesServiceImpl implements PlacesService {
     private PlaceMongoRepository placeMongoRepository;
 
     @Override
-    public Place create(PlaceDTO placeDTO) throws IOException {
-        return placeMongoRepository.save(PlaceMapper.toPlace(placeDTO));
+    public void create(PlaceDTO placeDTO) throws IOException {
+        placeMongoRepository.save(PlaceMapper.toPlace(placeDTO));
     }
 
     @Override
@@ -32,9 +32,25 @@ public class PlacesServiceImpl implements PlacesService {
 
     @Override
     public void remove(final String id) {
-        final Place place = placeMongoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid place Id:" + id));
+        final Place place = getPlace(id);
         placeMongoRepository.delete(place);
+    }
+
+    @Override
+    public PlaceDTO getById(final String id) {
+        final Place place = getPlace(id);
+        return PlaceMapper.toPlaceDTO(place);
+    }
+
+    @Override
+    public void update(final String id, final PlaceDTO placeDTO) throws IOException {
+        Place place = PlaceMapper.updatePlace(getPlace(id), placeDTO);
+        placeMongoRepository.save(place);
+    }
+
+    private Place getPlace(final String id) {
+        return placeMongoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid place Id:" + id));
     }
 
 }

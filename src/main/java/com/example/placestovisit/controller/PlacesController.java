@@ -24,13 +24,13 @@ public class PlacesController {
     private PlaceParamValidator placeParamValidator = new PlaceParamValidator();
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(final Model model) {
         final List<PlaceDTO> places = placesService.getAll();
         model.addAttribute("places", places);
         return "index";
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping("/add")
     public String addPlace(final @RequestParam("description") String description,
                            final @RequestParam("image") MultipartFile image) {
         try {
@@ -44,16 +44,43 @@ public class PlacesController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/add")
+    @GetMapping("/add")
     public String showAdd() {
         return "add-place";
     }
 
-    @GetMapping(value = "/delete/{id}")
-    public String delete(@PathVariable("id") String id) {
+    @GetMapping("/delete/{id}")
+    public String delete(final @PathVariable("id") String id) {
         try {
             placesService.remove(id);
         } catch (IllegalArgumentException e) {
+            //TODO manejo de errores
+            e.printStackTrace();
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEdit(final @PathVariable("id") String id, final Model model) {
+        try {
+            final PlaceDTO placeDTO = placesService.getById(id);
+            model.addAttribute("place", placeDTO);
+        } catch (IllegalArgumentException e) {
+            //TODO manejo de errores
+            e.printStackTrace();
+        }
+        return "update-place";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updatePlace(final @PathVariable("id") String id,
+                              final @RequestParam("description") String description,
+                              final @RequestParam("image") MultipartFile image) {
+        try {
+            final PlaceDTO placeDTO = new PlaceDTO(description, image);
+            placeParamValidator.validate(placeDTO);
+            placesService.update(id, placeDTO);
+        } catch (IOException e) {
             //TODO manejo de errores
             e.printStackTrace();
         }

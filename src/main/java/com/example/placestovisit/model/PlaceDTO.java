@@ -17,7 +17,7 @@ public class PlaceDTO {
         this.file = file;
     }
 
-    PlaceDTO(final String id, final String description, final String image) {
+    public PlaceDTO(final String id, final String description, final String image) {
         this.id = id;
         this.description = description;
         this.image = image;

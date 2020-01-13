@@ -32,4 +32,11 @@ public class Place {
         return image;
     }
 
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public void setImage(final Binary image) {
+        this.image = image;
+    }
 }

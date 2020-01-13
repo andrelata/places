@@ -20,4 +20,15 @@ public final class PlaceMapper {
         }
         return new PlaceDTO(place.getId(), place.getDescription(), imagePlaceDTO);
     }
+
+    public static Place updatePlace(final Place place, final PlaceDTO placeDTO) throws IOException {
+        final Binary imagePlace = new Binary(BsonBinarySubType.BINARY, placeDTO.getFile().getBytes());
+        if (!place.getImage().equals(imagePlace)) {
+            place.setImage(imagePlace);
+        }
+        if (!place.getDescription().equalsIgnoreCase(place.getDescription())) {
+            place.setDescription(placeDTO.getDescription());
+        }
+        return place;
+    }
 }
