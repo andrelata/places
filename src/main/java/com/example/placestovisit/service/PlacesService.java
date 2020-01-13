@@ -17,7 +17,7 @@ public interface PlacesService {
     /**
      * @return List of PlaceDTO
      */
-    List<PlaceDTO> getAll();
+    List<PlaceDTO> getSortByOrder();
 
     /**
      * @param id Place id

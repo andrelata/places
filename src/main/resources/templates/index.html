@@ -17,6 +17,17 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <style type="text/css">
+        body.dragging, body.dragging * {
+          cursor: move !important;
+        }
+        .dragged {
+          position: absolute;
+          opacity: 0.5;
+          z-index: 2000;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -96,12 +107,9 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
 
-<!--   <script>
-    $(function() {
-        $("#dataTable_filter").hide();
-        $("#dataTable_length").hide();
-    });
-  </script> -->
+<script src="vendor/jquery-sortable/jquery-sortable.js"></script>
+
+<script src="js/sortable.js"></script>
 
 </body>
 

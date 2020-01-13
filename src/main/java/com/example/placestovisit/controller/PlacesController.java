@@ -25,7 +25,7 @@ public class PlacesController {
 
     @GetMapping("/")
     public String index(final Model model) {
-        final List<PlaceDTO> places = placesService.getAll();
+        final List<PlaceDTO> places = placesService.getSortByOrder();
         model.addAttribute("places", places);
         return "index";
     }

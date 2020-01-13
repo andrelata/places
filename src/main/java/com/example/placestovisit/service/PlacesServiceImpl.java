@@ -5,6 +5,7 @@ import com.example.placestovisit.model.PlaceDTO;
 import com.example.placestovisit.model.PlaceMapper;
 import com.example.placestovisit.repository.PlaceMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,14 +18,20 @@ public class PlacesServiceImpl implements PlacesService {
     @Autowired
     private PlaceMongoRepository placeMongoRepository;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @Override
     public void create(PlaceDTO placeDTO) throws IOException {
-        placeMongoRepository.save(PlaceMapper.toPlace(placeDTO));
+        Place place = PlaceMapper.toPlace(placeDTO);
+        place.setOrder(sequenceGeneratorService.getNextSequence(Place.SEQUENCE_NAME));
+        placeMongoRepository.save(place);
     }
 
     @Override
-    public List<PlaceDTO> getAll() {
-        final List<Place> places = placeMongoRepository.findAll();
+    public List<PlaceDTO> getSortByOrder() {
+        final List<Place> places = placeMongoRepository.findAll(
+                Sort.by(Sort.Direction.ASC, Place.SORT_FIELD));
         return places.stream()
                 .map(PlaceMapper::toPlaceDTO)
                 .collect(Collectors.toList());
