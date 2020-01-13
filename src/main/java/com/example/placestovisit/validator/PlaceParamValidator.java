@@ -10,7 +10,7 @@ public class PlaceParamValidator {
 
     public void validate(final PlaceDTO placeDTO) {
         notNull.and(lessThan(300)).test(placeDTO.getDescription()).throwIfInvalid("description");
-        //notEmptyFile().test(placeDTO.getFile()).throwIfInvalid("image");
+        notEmptyFile().test(placeDTO.getFile()).throwIfInvalid("image");
     }
 
     private SimpleValidation<MultipartFile> notEmptyFile() {
