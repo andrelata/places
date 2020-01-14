@@ -58,4 +58,14 @@ class PlaceParamValidatorTest {
         assertThat(exception.getMessage(), is("image : must not be null."));
     }
 
+    @Test
+    public void validate_placeWithEmptyImage_isInvalid() {
+        final MockMultipartFile multipartImage = new MockMultipartFile("file", "test.jpg",
+                "image/jpeg", "".getBytes());
+        final PlaceDTO placeDTO = new PlaceDTO("alemania", multipartImage);
+        Exception exception = assertThrows(ValidationException.class, () -> {
+            validator.validate(placeDTO);
+        });
+        assertThat(exception.getMessage(), is("image : must not be null."));
+    }
 }

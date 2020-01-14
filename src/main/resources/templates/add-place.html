@@ -42,6 +42,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="file" name="image" class="file" accept="image/*" >
+                                <img alt="sample" class="img-fluid img-thumbnail" id="preview"/>
                                 <div class="input-group my-3">
                                     <input type="text" class="form-control" disabled placeholder="Upload File" id="file">
                                     <div class="input-group-append">
@@ -49,9 +50,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <p class="form-control border-bottom-danger" th:if="${errors}" th:text="${errors}"></p>
+                            </div>
                             <input type="submit" value="Add" class="btn btn-primary btn-user"/>
                         </form>
                         <hr>
+                        <a href="/"><i class="fas fa-long-arrow-alt-left"></i>Back to Index</a>
                     </div>
                 </div>
             </div>
@@ -71,6 +76,9 @@
 <script src="js/sb-admin-2.min.js"></script>
 
 <script type="text/javascript">
+    $( document ).ready(function() {
+       $("#preview").hide();
+    });
     $(document).on("click", ".browse", function() {
       var file = $(this).parents().find(".file");
       file.trigger("click");
@@ -78,6 +86,8 @@
     $('input[type="file"]').change(function(e) {
       var fileName = e.target.files[0].name;
       $("#file").val(fileName);
+      var preview = $("#preview");
+      $("#preview").show();
 
       var reader = new FileReader();
       reader.onload = function(e) {
@@ -86,6 +96,7 @@
       };
       // read the image file as a data URL.
       reader.readAsDataURL(this.files[0]);
+      preview.src = reader.result;
     });
   </script>
 

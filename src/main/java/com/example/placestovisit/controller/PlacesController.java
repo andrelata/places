@@ -6,12 +6,10 @@ import com.example.placestovisit.validator.PlaceParamValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.ValidationException;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,16 +30,20 @@ public class PlacesController {
 
     @PostMapping("/add")
     public String addPlace(final @RequestParam("description") String description,
-                           final @RequestParam("image") MultipartFile image) {
+                           final @RequestParam("image") MultipartFile image,
+                           final Model model) throws IOException {
         try {
             final PlaceDTO placeDTO = new PlaceDTO(description, image);
             placeParamValidator.validate(placeDTO);
             placesService.create(placeDTO);
-        } catch (IOException e) {
-            //TODO manejo de errores
-            e.printStackTrace();
+            return "redirect:/";
+        } catch (ValidationException e) {
+            model.addAttribute("description", description);
+            model.addAttribute("image", image);
+            model.addAttribute("errors", e.getMessage());
+            return "add-place";
         }
-        return "redirect:/";
+
     }
 
     @GetMapping("/add")
@@ -51,40 +53,38 @@ public class PlacesController {
 
     @GetMapping("/delete/{id}")
     public String delete(final @PathVariable("id") String id) {
-        try {
-            placesService.remove(id);
-        } catch (IllegalArgumentException e) {
-            //TODO manejo de errores
-            e.printStackTrace();
-        }
+        placesService.remove(id);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
     public String showEdit(final @PathVariable("id") String id, final Model model) {
-        try {
-            final PlaceDTO placeDTO = placesService.getById(id);
-            model.addAttribute("place", placeDTO);
-        } catch (IllegalArgumentException e) {
-            //TODO manejo de errores
-            e.printStackTrace();
-        }
+        final PlaceDTO placeDTO = placesService.getById(id);
+        model.addAttribute("place", placeDTO);
         return "update-place";
     }
 
     @PostMapping("/edit/{id}")
     public String updatePlace(final @PathVariable("id") String id,
                               final @RequestParam("description") String description,
-                              final @RequestParam("image") MultipartFile image) {
+                              final @RequestParam("image") MultipartFile image,
+                              final Model model) throws IOException {
+        final PlaceDTO placeDTO = new PlaceDTO(description, image);
         try {
-            final PlaceDTO placeDTO = new PlaceDTO(description, image);
             placeParamValidator.validate(placeDTO);
             placesService.update(id, placeDTO);
-        } catch (IOException e) {
-            //TODO manejo de errores
-            e.printStackTrace();
+            return "redirect:/";
+        } catch (ValidationException e) {
+            model.addAttribute("errors", e.getMessage());
+            model.addAttribute("place", placeDTO);
+            return "update-place";
         }
-        return "redirect:/";
+    }
+
+    @ExceptionHandler({ IOException.class, IllegalArgumentException.class})
+    public String handleException(final Exception e) {
+        //TODO add log with error
+        return "error";
     }
 
 }

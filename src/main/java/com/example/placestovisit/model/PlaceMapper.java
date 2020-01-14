@@ -26,7 +26,7 @@ public final class PlaceMapper {
         if (!place.getImage().equals(imagePlace)) {
             place.setImage(imagePlace);
         }
-        if (!place.getDescription().equalsIgnoreCase(place.getDescription())) {
+        if (!place.getDescription().equalsIgnoreCase(placeDTO.getDescription())) {
             place.setDescription(placeDTO.getDescription());
         }
         return place;
