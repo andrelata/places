@@ -69,7 +69,7 @@ public class PlacesController {
                               final @RequestParam("description") String description,
                               final @RequestParam("image") MultipartFile image,
                               final Model model) throws IOException {
-        final PlaceDTO placeDTO = new PlaceDTO(description, image);
+        final PlaceDTO placeDTO = new PlaceDTO(id, description, image);
         try {
             placeParamValidator.validate(placeDTO);
             placesService.update(id, placeDTO);

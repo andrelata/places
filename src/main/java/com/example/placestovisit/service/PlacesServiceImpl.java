@@ -57,7 +57,7 @@ public class PlacesServiceImpl implements PlacesService {
 
     private Place getPlace(final String id) {
         return placeMongoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid place Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid place Id: " + id));
     }
 
 }

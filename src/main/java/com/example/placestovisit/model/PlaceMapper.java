@@ -18,7 +18,7 @@ public final class PlaceMapper {
         if (place.getImage() != null) {
             imagePlaceDTO = Base64.getEncoder().encodeToString(place.getImage().getData());
         }
-        return new PlaceDTO(place.getId(), place.getDescription(), imagePlaceDTO);
+        return new PlaceDTO(place.getId(), place.getDescription(), imagePlaceDTO, place.getOrder());
     }
 
     public static Place updatePlace(final Place place, final PlaceDTO placeDTO) throws IOException {
