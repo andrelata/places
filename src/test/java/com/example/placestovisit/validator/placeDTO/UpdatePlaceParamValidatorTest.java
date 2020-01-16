@@ -1,4 +1,4 @@
-package com.example.placestovisit.validator;
+package com.example.placestovisit.validator.placeDTO;
 
 import com.example.placestovisit.model.PlaceDTO;
 import org.junit.jupiter.api.Test;
@@ -10,9 +10,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PlaceParamValidatorTest {
+class UpdatePlaceParamValidatorTest {
 
-    private PlaceParamValidator validator = new PlaceParamValidator();
+    private UpdatePlaceParamValidator validator = new UpdatePlaceParamValidator();
 
     @Test
     public void validate_placeWithDescriptionAndImage_isOk(){
@@ -47,25 +47,5 @@ class PlaceParamValidatorTest {
             validator.validate(placeDTO);
         });
         assertThat(exception.getMessage(), is("description : must have less than 300 chars."));
-    }
-
-    @Test
-    public void validate_placeWithoutImage_isInvalid() {
-        final PlaceDTO placeDTO = new PlaceDTO("alemania", null);
-        Exception exception = assertThrows(ValidationException.class, () -> {
-            validator.validate(placeDTO);
-        });
-        assertThat(exception.getMessage(), is("image : must not be null."));
-    }
-
-    @Test
-    public void validate_placeWithEmptyImage_isInvalid() {
-        final MockMultipartFile multipartImage = new MockMultipartFile("file", "test.jpg",
-                "image/jpeg", "".getBytes());
-        final PlaceDTO placeDTO = new PlaceDTO("alemania", multipartImage);
-        Exception exception = assertThrows(ValidationException.class, () -> {
-            validator.validate(placeDTO);
-        });
-        assertThat(exception.getMessage(), is("image : must not be null."));
     }
 }

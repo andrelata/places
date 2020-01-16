@@ -2,7 +2,8 @@ package com.example.placestovisit.controller;
 
 import com.example.placestovisit.model.PlaceDTO;
 import com.example.placestovisit.service.PlacesService;
-import com.example.placestovisit.validator.PlaceParamValidator;
+import com.example.placestovisit.validator.placeDTO.AddPlaceParamValidator;
+import com.example.placestovisit.validator.placeDTO.UpdatePlaceParamValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,8 @@ public class PlacesController {
     @Autowired
     private PlacesService placesService;
 
-    private PlaceParamValidator placeParamValidator = new PlaceParamValidator();
+    private AddPlaceParamValidator addPlaceParamValidator = new AddPlaceParamValidator();
+    private UpdatePlaceParamValidator updatePlaceParamValidator = new UpdatePlaceParamValidator();
 
     @GetMapping("/")
     public String index(final Model model) {
@@ -34,7 +36,7 @@ public class PlacesController {
                            final Model model) throws IOException {
         try {
             final PlaceDTO placeDTO = new PlaceDTO(description, image);
-            placeParamValidator.validate(placeDTO);
+            addPlaceParamValidator.validate(placeDTO);
             placesService.create(placeDTO);
             return "redirect:/";
         } catch (ValidationException e) {
@@ -71,7 +73,7 @@ public class PlacesController {
                               final Model model) throws IOException {
         final PlaceDTO placeDTO = new PlaceDTO(id, description, image);
         try {
-            placeParamValidator.validate(placeDTO);
+            updatePlaceParamValidator.validate(placeDTO);
             placesService.update(id, placeDTO);
             return "redirect:/";
         } catch (ValidationException e) {
