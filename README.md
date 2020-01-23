@@ -4,7 +4,7 @@
 ![framework Spring boot](https://img.shields.io/badge/framework-Springboot-yellow.svg)
 ![coverage 67](https://img.shields.io/badge/coverage-67-violet.svg)
 
-Single page application that displays a list of places to visit and let you crud that information.
+Web application that displays a list of places to visit and let you crud that information.
 
 
 ## Execution instructions
